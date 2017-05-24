@@ -5,23 +5,55 @@
       <img src="../assets/logo.png" alt="">
     </div>
     <ul class="header-ul">
-      <li>登陆</li>
-      <li>注册</li>
-      <li>关于</li>
+      <li @click="login">登陆</li>
+      <li @click="reg">注册</li>
+      <li @click="about">关于</li>
     </ul>
   </div>
   <div class="app-content">
     <router-view></router-view>
   </div>
   <div class="app-footer">footer</div>
+  <my-dialog :isShow="isloginShow" @on-close="closeDialog('isloginShow')">
+    <login-form>login</login-form>
+  </my-dialog>
+  <my-dialog :isShow="isregShow" @on-close="closeDialog('isregShow')">
+    <reg-form>reg</reg-form>
+  </my-dialog>
+  <my-dialog :isShow="isaboutShow" @on-close="closeDialog('isaboutShow')">
+    <p>about</p>
+  </my-dialog>
 </div>
 
 </template>
 
 <script>
-
+import myDialog from '../components/base/dialog'
 export default {
-
+  data () {
+    return {
+      isloginShow: false,
+      isregShow: false,
+      isaboutShow: false
+    }
+  },
+  components: {
+    myDialog
+  },
+  methods: {
+    login () {
+      this.isloginShow = true
+    },
+    reg () {
+      this.isregShow = true
+    },
+    about () {
+      this.isaboutShow = true
+    },
+    closeDialog (err) {
+      this[err] = false
+    }
+  }
 }
 </script>
 
