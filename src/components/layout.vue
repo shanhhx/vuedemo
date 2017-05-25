@@ -15,10 +15,10 @@
   </div>
   <div class="app-footer">footer</div>
   <my-dialog :isShow="isloginShow" @on-close="closeDialog('isloginShow')">
-    <login-form>login</login-form>
+    <login-form></login-form>
   </my-dialog>
   <my-dialog :isShow="isregShow" @on-close="closeDialog('isregShow')">
-    <reg-form>reg</reg-form>
+    <reg-form></reg-form>
   </my-dialog>
   <my-dialog :isShow="isaboutShow" @on-close="closeDialog('isaboutShow')">
     <p>about</p>
@@ -29,6 +29,8 @@
 
 <script>
 import myDialog from '../components/base/dialog'
+import loginForm from '../components/loginform'
+import regForm from '../components/regform'
 export default {
   data () {
     return {
@@ -38,7 +40,7 @@ export default {
     }
   },
   components: {
-    myDialog
+    myDialog, loginForm, regForm
   },
   methods: {
     login () {
