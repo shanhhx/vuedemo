@@ -6,7 +6,7 @@
     </div>
     <div class="form-text">
       <input v-model="myusername" type="text">
-      <span>{{myusername}}</span>
+      <span>{{ userErrors.errorText }}</span>
     </div>
   </div>
   <div class="form-group">
@@ -15,7 +15,7 @@
     </div>
     <div class="form-text">
       <input v-model="mypassword" type="password">
-      <span>{{mypassword}}</span>
+      <span>{{ passwordErrors.errorText }}</span>
     </div>
   </div>
   <div class="form-group">
@@ -35,9 +35,56 @@ export default {
       myusername: ''
     }
   },
+  computed: {
+    userErrors () {
+      let errorText, status
+      if (!/@/g.test(this.myusername)) {
+        status = false
+        errorText = '不包含@'
+      } else {
+        status = true
+        errorText = ''
+      }
+      if (!this.userFlag) {
+        errorText = ''
+        this.userFlag = true
+      }
+      return {
+        status,
+        errorText
+      }
+    },
+    passwordErrors () {
+      let errorText, status
+      if (!/^\w{1,6}$/g.test(this.mypassword)) {
+        status = false
+        errorText = '密码不是1-6位'
+      } else {
+        status = true
+        errorText = ''
+      }
+      if (!this.passwordFlag) {
+        errorText = ''
+        this.passwordFlag = true
+      }
+      return {
+        status,
+        errorText
+      }
+    }
+  },
   methods: {
     onLogin () {
-      console.log(this.mypassword, this.myusername)
+      if (!this.userErrors.status || !this.passwordErrors.status) {
+        alert('登陆失败')
+      } else {
+        this.$http.get('http://localhost:8081/api/login')
+          .then((res) => {
+            this.$emit('has-log', res.data)
+          }, (err) => {
+            console.log(err)
+          })
+      }
     }
   }
 }

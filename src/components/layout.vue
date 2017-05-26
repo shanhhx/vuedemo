@@ -5,8 +5,10 @@
       <img src="../assets/logo.png" alt="">
     </div>
     <ul class="header-ul">
-      <li @click="login">登陆</li>
-      <li @click="reg">注册</li>
+      <li>{{username}}</li>
+      <li v-if="!username" @click="login">登陆</li>
+      <li v-if="!username" @click="reg">注册</li>
+      <li v-if="username">退出</li>
       <li @click="about">关于</li>
     </ul>
   </div>
@@ -15,7 +17,7 @@
   </div>
   <div class="app-footer">footer</div>
   <my-dialog :isShow="isloginShow" @on-close="closeDialog('isloginShow')">
-    <login-form></login-form>
+    <login-form @has-log="logsuccess"></login-form>
   </my-dialog>
   <my-dialog :isShow="isregShow" @on-close="closeDialog('isregShow')">
     <reg-form></reg-form>
@@ -36,10 +38,12 @@ export default {
     return {
       isloginShow: false,
       isregShow: false,
-      isaboutShow: false
+      isaboutShow: false,
+      username: ''
     }
   },
   components: {
+
     myDialog, loginForm, regForm
   },
   methods: {
@@ -54,6 +58,11 @@ export default {
     },
     closeDialog (err) {
       this[err] = false
+    },
+    logsuccess (data) {
+      console.log(data)
+      this.username = data.username
+      this.closeDialog('isloginShow')
     }
   }
 }
