@@ -27,7 +27,7 @@
           <h2>{{ borderItem.title }}</h2>
           <p>{{ borderItem.description }}</p>
           <div class="index-board-button">
-            <a href="" class="button">立即购买</a>
+            <router-link :to="{path: '/detial/' + borderItem.id}" class="button">立即购买</router-link>
           </div>
         </div>
       </div>

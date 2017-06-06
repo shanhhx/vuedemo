@@ -1,8 +1,10 @@
 <template>
-<div>
+<div class="main">
   <div class="app-header">
     <div class="header-log">
-      <img src="../assets/logo.png" alt="">
+      <router-link :to="{ path: '/'}">
+        <img src="../assets/logo.png" alt="">
+      </router-link>
     </div>
     <ul class="header-ul">
       <li>{{username}}</li>
@@ -198,4 +200,7 @@ export default {
   margin-top: 30px;
 
 }
+  .main{
+    background: rgb(247, 246, 242)
+  }
 </style>
